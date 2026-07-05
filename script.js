@@ -376,9 +376,24 @@ document.addEventListener('DOMContentLoaded', () => {
       startY = e.touches[0].clientY;
     }, { passive: true });
     
+    formulasContainer.addEventListener('touchmove', (e) => {
+      if (startX === 0) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = currentX - startX;
+      const diffY = currentY - startY;
+      
+      // หากผู้ใช้จงใจปัดซ้าย-ขวา ป้องกันไม่ให้เบราว์เซอร์ทำ overscroll / history-swipe (ไปหน้าก่อนหน้า/ถัดไป)
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (e.cancelable) e.preventDefault();
+      }
+    }, { passive: false });
+    
     formulasContainer.addEventListener('touchend', (e) => {
       if (e.changedTouches.length === 0) return;
       handleSwipe(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+      startX = 0;
+      startY = 0;
     }, { passive: true });
 
     // --- Mouse Drag สำหรับเดสก์ท็อป/เบราว์เซอร์ปกติ ---
