@@ -1,7 +1,9 @@
 /* กำหนดฟอนต์หลักของเว็บไซต์ */
-body {
+html, body {
   font-family: 'Prompt', sans-serif;
   overscroll-behavior-x: none; /* ป้องกันการเลื่อนขอบและประวัติหน้าเว็บแนวนอน */
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* ซ่อน Scrollbar แต่ยังเลื่อนได้ สำหรับเมนูหมวดหมู่ในมือถือ */
@@ -64,4 +66,10 @@ body {
     opacity: 1; 
     transform: translateX(0); 
   }
+}
+
+/* ป้องกันการขยับซ้ายขวาและการขยายเกินหน้าจอสำหรับกล่องเนื้อหาหลัก */
+main, #formulasContainer {
+  max-width: 100%;
+  overflow-x: hidden;
 }

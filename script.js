@@ -275,7 +275,7 @@ function renderFormulas() {
           const isCopied = copiedId === item.id;
           
           return `
-            <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-200 group flex flex-col justify-between ${isHighlighted ? 'border-amber-200' : 'border-slate-100'}">
+            <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-200 group flex flex-col justify-between min-w-0 ${isHighlighted ? 'border-amber-200' : 'border-slate-100'}">
               <div class="w-full overflow-hidden">
                 <div class="flex justify-between items-start mb-2 sm:mb-3">
                   <span class="inline-block px-2 sm:px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-medium tracking-wide ${isHighlighted ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-500'}">
