@@ -122,7 +122,13 @@ const formulasData = [
   { id: 204, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ดอกเบี้ยและการเงิน', name: 'เงินรวมปลายงวดรายปี (FV of Ordinary Annuity)', formula: 'FV = R · [((1 + r)ⁿ - 1) / r]  (FV: เงินรวม, R: เงินงวด, r: ดอกเบี้ย, n: จำนวนงวด)' },
   { id: 205, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ดอกเบี้ยและการเงิน', name: 'มูลค่าปัจจุบันของเงินงวด (PV of Ordinary Annuity)', formula: 'PV = R · [(1 - (1 + r)⁻ⁿ) / r]  (PV: มูลค่าปัจจุบัน, R: เงินงวด, r: ดอกเบี้ย, n: จำนวนงวด)' },
   { id: 206, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ดอกเบี้ยและการเงิน', name: 'อัตราดอกเบี้ยแท้จริงต่อปี (Effective Annual Rate - EAR)', formula: 'EAR = (1 + r/k)ᵏ - 1  (r: อัตราดอกเบี้ยตามปี, k: จำนวนครั้งทบต้น/ปี)' },
-  { id: 61, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'ความเข้มข้นของผสม', formula: 'C(รวม) = (C₁V₁ + C₂V₂) / (V₁ + V₂)' },
+  { id: 61, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'ความเข้มข้นของผสม (2 ชนิด)', formula: 'C(รวม) = (C₁V₁ + C₂V₂) / (V₁ + V₂)  (C: ความเข้มข้น %, V: ปริมาตร)' },
+  { id: 230, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'ความเข้มข้นของผสม (หลายชนิด)', formula: 'C(รวม) = Σ(CᵢVᵢ) / Σ(Vᵢ)  (C(รวม)·V(รวม) = C₁V₁ + C₂V₂ + ...)' },
+  { id: 231, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'ปริมาณเนื้อสารในสารละลาย', formula: 'เนื้อสาร = ปริมาตรรวม(V) × (ความเข้มข้น(C) / 100)' },
+  { id: 232, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'การเติมน้ำบริสุทธิ์ (เจือจาง)', formula: 'เนื้อสารเดิม = เนื้อสารใหม่  (C₁V₁ = C₂V₂  โดย C(น้ำ) = 0%)' },
+  { id: 233, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'การระเหยน้ำออก', formula: 'C₁V₁ = C₂V₂  (เนื้อสารเท่าเดิม แต่ปริมาตรลดลง: V₂ = V₁ - V(ระเหย))' },
+  { id: 234, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'การเติมสารละลายบริสุทธิ์ 100%', formula: 'C₁V₁ + 100·V(เติม) = C₂V₂  (เช่น เติมเกลือหรือน้ำตาลล้วน)' },
+  { id: 235, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'กฎสัดส่วนผสม (Alligation Rule)', formula: 'อัตราส่วนผสม V₁/V₂ = |C(รวม) - C₂| / |C₁ - C(รวม)|' },
   { id: 62, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'โจทย์เชาวน์และเบ็ดเตล็ด', name: 'จำนวนเสาไฟ (ทางตรง)', formula: 'จำนวนเสา = (ระยะทาง / ระยะห่าง) + 1' },
   { id: 63, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'โจทย์เชาวน์และเบ็ดเตล็ด', name: 'การจับมือ (ทุกคนจับ 1 ครั้ง)', formula: 'จำนวนครั้ง = n(n-1) / 2' },
   { id: 64, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'โจทย์เชาวน์และเบ็ดเตล็ด', name: 'หัวและขาของสัตว์ (หาสัตว์ 2 ขา)', formula: 'จำนวน = (4×หัว - ขา) / 2' },
@@ -197,6 +203,7 @@ const categories = [
 let selectedCategory = 'ทั้งหมด';
 let searchTerm = '';
 let copiedId = null;
+let currentTransitionClass = 'animate-fade-in';
 
 // ฟังก์ชันสร้างปุ่มหมวดหมู่
 function renderCategories() {
@@ -222,6 +229,9 @@ function renderCategories() {
 function renderFormulas() {
   const container = document.getElementById('formulasContainer');
   if (!container) return;
+  
+  const transitionClass = currentTransitionClass;
+  currentTransitionClass = 'animate-fade-in';
   
   // กรองข้อมูลตามคำค้นหาและหมวดหมู่
   const filtered = formulasData.filter(item => {
@@ -253,7 +263,7 @@ function renderFormulas() {
   }, {});
 
   container.innerHTML = Object.entries(grouped).map(([groupName, formulas]) => `
-    <div class="animate-fade-in">
+    <div class="${transitionClass}">
       <h2 class="text-lg sm:text-xl font-bold text-slate-800 mb-3 sm:mb-4 pb-2 border-b-2 border-slate-100 flex items-center gap-2">
         <span class="text-indigo-600 text-base sm:text-lg">■</span> ${groupName}
       </h2>
@@ -303,10 +313,19 @@ function renderFormulas() {
 }
 
 // ฟังก์ชันเลือกหมวดหมู่
-function selectCategory(categoryName) {
+function selectCategory(categoryName, transitionClass = 'animate-fade-in') {
   selectedCategory = categoryName;
+  currentTransitionClass = transitionClass;
   renderCategories();
   renderFormulas();
+  
+  // เลื่อนปุ่มหมวดหมู่ที่เลือกให้แสดงตรงกลางจอ
+  setTimeout(() => {
+    const activeBtn = document.querySelector('#categoryContainer button.bg-indigo-600');
+    if (activeBtn) {
+      activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, 50);
 }
 
 // ฟังก์ชันคัดลอกสูตร
@@ -343,6 +362,88 @@ document.addEventListener('DOMContentLoaded', () => {
       renderFormulas();
     });
   }
+
+  // ตรวจสอบการปัดหน้าจอ (Swipe/Drag Gestures) บนเนื้อหาสูตร (ทั้ง Touch และ Mouse)
+  const formulasContainer = document.getElementById('formulasContainer');
+  if (formulasContainer) {
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    
+    // --- Touch สำหรับมือถือ ---
+    formulasContainer.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    formulasContainer.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length === 0) return;
+      handleSwipe(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+    }, { passive: true });
+
+    // --- Mouse Drag สำหรับเดสก์ท็อป/เบราว์เซอร์ปกติ ---
+    formulasContainer.addEventListener('mousedown', (e) => {
+      // ข้ามถ้ากดปุ่ม, โค้ดสูตร หรือ input ต่างๆ เพื่อให้กดคัดลอกและคลุมดำเลือกข้อความได้ปกติ
+      if (e.target.closest('button, code, input, select, textarea, a')) return;
+      startX = e.clientX;
+      startY = e.clientY;
+      isDragging = true;
+    });
+
+    formulasContainer.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      handleSwipe(e.clientX, e.clientY);
+    });
+
+    formulasContainer.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+
+    // ฟังก์ชันประมวลผลการปัด/ลาก
+    function handleSwipe(endX, endY) {
+      const diffX = endX - startX;
+      const diffY = endY - startY;
+      
+      // ตรวจสอบว่าเป็นการปัดในแนวนอน และมีระยะปัดอย่างน้อย 60px
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 60) {
+        const currentIndex = categories.findIndex(cat => cat.name === selectedCategory);
+        if (currentIndex !== -1) {
+          if (diffX < 0) {
+            // ปัดซ้าย -> ไปหมวดหมู่ถัดไป (Next)
+            const nextIndex = (currentIndex + 1) % categories.length;
+            selectCategory(categories[nextIndex].name, 'animate-slide-in-right');
+          } else {
+            // ปัดขวา -> ไปหมวดหมู่ก่อนหน้า (Prev)
+            const prevIndex = (currentIndex - 1 + categories.length) % categories.length;
+            selectCategory(categories[prevIndex].name, 'animate-slide-in-left');
+          }
+        }
+      }
+    }
+  }
+
+  // รองรับการกดปุ่มลูกศร ซ้าย-ขวา บนคีย์บอร์ดสำหรับ Desktop
+  document.addEventListener('keydown', (e) => {
+    // ข้ามการทำงานหากผู้ใช้กำลังพิมพ์อยู่ในช่องค้นหา
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+      return;
+    }
+    
+    if (e.key === 'ArrowLeft') {
+      const currentIndex = categories.findIndex(cat => cat.name === selectedCategory);
+      if (currentIndex !== -1) {
+        const prevIndex = (currentIndex - 1 + categories.length) % categories.length;
+        selectCategory(categories[prevIndex].name, 'animate-slide-in-left');
+      }
+    } else if (e.key === 'ArrowRight') {
+      const currentIndex = categories.findIndex(cat => cat.name === selectedCategory);
+      if (currentIndex !== -1) {
+        const nextIndex = (currentIndex + 1) % categories.length;
+        selectCategory(categories[nextIndex].name, 'animate-slide-in-right');
+      }
+    }
+  });
 
   // เริ่มทำงานครั้งแรก
   renderCategories();
