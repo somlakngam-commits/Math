@@ -290,7 +290,14 @@ function renderFormulas() {
                 </div>
               </div>
               
-              <div class="mt-4 sm:mt-5 flex justify-end shrink-0">
+              <div class="mt-4 sm:mt-5 flex justify-between items-center gap-2 shrink-0">
+                <a
+                  href="detail.html?id=${item.id}"
+                  class="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-indigo-50 active:bg-indigo-100"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 sm:w-4 sm:h-4"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  <span>วิธีใช้ & ตัวอย่าง</span>
+                </a>
                 <button
                   onclick="copyToClipboard('${item.formula.replace(/'/g, "\\'")}', ${item.id})"
                   class="flex items-center gap-1.5 text-xs sm:text-sm font-medium transition-colors px-3 py-1.5 rounded-lg hover:bg-indigo-50 active:bg-indigo-100 ${isCopied ? 'text-emerald-500' : 'text-slate-500 hover:text-indigo-600'}"
