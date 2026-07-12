@@ -1,4 +1,8 @@
 /* กำหนดฟอนต์หลักของเว็บไซต์ */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
 html, body {
   font-family: 'Prompt', sans-serif;
   overscroll-behavior-x: none; /* ป้องกันการเลื่อนขอบและประวัติหน้าเว็บแนวนอน */

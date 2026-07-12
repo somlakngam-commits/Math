@@ -66,6 +66,137 @@ const richDetails = {
         ]
       }
     ]
+  },
+  236: {
+    explanation: "สูตรหาต้นทุนเฉลี่ยของผสม (Weighted Average Cost) ใช้หาต้นทุนเฉลี่ยต่อหน่วย เมื่อนำสิ่งของสองชนิดหรือมากกว่าที่มีราคาต่างกันมาผสมกันในอัตราส่วนหรือปริมาณที่ระบุ",
+    examples: [
+      {
+        problem: "น้ำปลาเกรดเอราคาลิตรละ 80 บาท ผสมกับน้ำปลาเกรดบีลิตรละ 40 บาท ในอัตราส่วน 6 : 2 จะมีต้นทุนเฉลี่ยลิตรละกี่บาท?",
+        steps: [
+          "ระบุข้อมูลที่โจทย์กำหนด:<br>• สิ่งของชนิดที่ 1 (เกรดเอ): ราคา P₁ = 80 บาท, อัตราส่วน w₁ = 6<br>• สิ่งของชนิดที่ 2 (เกรดบี): ราคา P₂ = 40 บาท, อัตราส่วน w₂ = 2",
+          "จากสูตรต้นทุนเฉลี่ย: P(เฉลี่ย) = (P₁w₁ + P₂w₂) / (w₁ + w₂)",
+          "แทนค่าลงในสูตร:<br>P(เฉลี่ย) = ((80 × 6) + (40 × 2)) / (6 + 2)",
+          "คำนวณผลคูณในตัวเศษ:<br>• ราคารวม = 480 + 80 = 560 บาท",
+          "คำนวณผลบวกในตัวส่วน (ปริมาณรวม):<br>• ปริมาณรวม = 6 + 2 = 8 ลิตร",
+          "หาค่าเฉลี่ย:<br>P(เฉลี่ย) = 560 / 8 = 70 บาท",
+          "สรุปคำตอบ: ต้นทุนเฉลี่ยของน้ำปลาผสมเท่ากับ 70 บาทต่อลิตร"
+        ]
+      }
+    ],
+    calculator: {
+      title: "เครื่องคำนวณต้นทุนเฉลี่ยของผสม (Weighted Average Cost)",
+      inputs: [
+        { name: "P1", label: "ราคาของชนิดที่ 1 (บาท/หน่วย)", placeholder: "เช่น 80", value: 80 },
+        { name: "w1", label: "ปริมาณ/อัตราส่วน ชนิดที่ 1", placeholder: "เช่น 6", value: 6 },
+        { name: "P2", label: "ราคาของชนิดที่ 2 (บาท/หน่วย)", placeholder: "เช่น 40", value: 40 },
+        { name: "w2", label: "ปริมาณ/อัตราส่วน ชนิดที่ 2", placeholder: "เช่น 2", value: 2 }
+      ],
+      calculate: (inputs) => {
+        const p1 = parseFloat(inputs.P1);
+        const w1 = parseFloat(inputs.w1);
+        const p2 = parseFloat(inputs.P2);
+        const w2 = parseFloat(inputs.w2);
+        if (isNaN(p1) || isNaN(w1) || isNaN(p2) || isNaN(w2)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง</span>';
+        const totalCost = (p1 * w1) + (p2 * w2);
+        const totalQty = w1 + w2;
+        if (totalQty === 0) return '<span class="text-rose-500 font-medium">ปริมาณรวมต้องไม่เป็นศูนย์</span>';
+        const avg = totalCost / totalQty;
+        return `
+          <div class="space-y-2">
+            <p class="text-lg font-bold text-indigo-700">ต้นทุนเฉลี่ย = <span class="text-xl text-indigo-600">${avg.toFixed(2)}</span> บาท/หน่วย</p>
+            <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono space-y-1">
+              <span class="text-indigo-500 font-bold">วิธีคิด:</span><br>
+              = ((${p1} × ${w1}) + (${p2} × ${w2})) / (${w1} + ${w2})<br>
+              = (${p1 * w1} + ${p2 * w2}) / ${totalQty}<br>
+              = ${totalCost} / ${totalQty}<br>
+              = ${avg.toFixed(2)} บาท/หน่วย
+            </div>
+          </div>
+        `;
+      }
+    }
+  },
+  237: {
+    explanation: "สูตรคำนวณราคาขายเพื่อให้ได้กำไรตามเปอร์เซ็นต์ที่ต้องการ โดยคิดเทียบจากต้นทุนเดิมเป็นฐาน 100%",
+    examples: [
+      {
+        problem: "ต้องการขายน้ำปลาผสมที่มีต้นทุนลิตรละ 70 บาท ให้ได้กำไร 20% จะต้องขายลิตรละกี่บาท?",
+        steps: [
+          "ระบุข้อมูลที่โจทย์กำหนด:<br>• ต้นทุน (Cost) = 70 บาท<br>• กำไรที่ต้องการ = 20%",
+          "จากสูตรราคาขายเมื่อคิดกำไร: ราคาขาย = ต้นทุน × (1 + กำไร% / 100)",
+          "แทนค่าลงในสูตร:<br>ราคาขาย = 70 × (1 + 20 / 100)",
+          "คำนวณค่าในวงเล็บ:<br>ราคาขาย = 70 × (1 + 0.20) = 70 × 1.20",
+          "คำนวณผลลัพธ์สุดท้าย:<br>ราคาขาย = 84 บาท",
+          "สรุปคำตอบ: ต้องตั้งราคาขายที่ลิตรละ 84 บาท จึงจะได้กำไร 20%"
+        ]
+      }
+    ],
+    calculator: {
+      title: "เครื่องคำนวณราคาขายเมื่อคิดกำไร (%)",
+      inputs: [
+        { name: "cost", label: "ต้นทุน (บาท)", placeholder: "เช่น 70", value: 70 },
+        { name: "profit", label: "กำไรที่ต้องการ (%)", placeholder: "เช่น 20", value: 20 }
+      ],
+      calculate: (inputs) => {
+        const cost = parseFloat(inputs.cost);
+        const profit = parseFloat(inputs.profit);
+        if (isNaN(cost) || isNaN(profit)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง</span>';
+        const price = cost * (1 + profit / 100);
+        return `
+          <div class="space-y-2">
+            <p class="text-lg font-bold text-indigo-700">ราคาขาย = <span class="text-xl text-indigo-600">${price.toFixed(2)}</span> บาท</p>
+            <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono space-y-1">
+              <span class="text-indigo-500 font-bold">วิธีคิด:</span><br>
+              = ${cost} × (1 + ${profit} / 100)<br>
+              = ${cost} × (1 + ${profit / 100})<br>
+              = ${cost} × ${1 + profit / 100}<br>
+              = ${price.toFixed(2)} บาท
+            </div>
+          </div>
+        `;
+      }
+    }
+  },
+  238: {
+    explanation: "สูตรคำนวณราคาขายเมื่อขาดทุนเป็นเปอร์เซ็นต์ โดยคิดหักออกลบจากต้นทุนฐาน 100%",
+    examples: [
+      {
+        problem: "ต้นทุนสินค้าชิ้นหนึ่ง 150 บาท ขายขาดทุนไป 10% จะต้องขายสินค้าชิ้นนี้ในราคากี่บาท?",
+        steps: [
+          "ระบุข้อมูลที่โจทย์กำหนด:<br>• ต้นทุน (Cost) = 150 บาท<br>• ขาดทุน = 10%",
+          "จากสูตรราคาขายเมื่อคิดขาดทุน: ราคาขาย = ต้นทุน × (1 - ขาดทุน% / 100)",
+          "แทนค่าลงในสูตร:<br>ราคาขาย = 150 × (1 - 10 / 100)",
+          "คำนวณค่าในวงเล็บ:<br>ราคาขาย = 150 × (1 - 0.10) = 150 × 0.90",
+          "คำนวณผลลัพธ์สุดท้าย:<br>ราคาขาย = 135 บาท",
+          "สรุปคำตอบ: ราคาขายสินค้าเมื่อขาดทุน 10% เท่ากับ 135 บาท"
+        ]
+      }
+    ],
+    calculator: {
+      title: "เครื่องคำนวณราคาขายเมื่อคิดขาดทุน (%)",
+      inputs: [
+        { name: "cost", label: "ต้นทุน (บาท)", placeholder: "เช่น 150", value: 150 },
+        { name: "loss", label: "ขาดทุน (%)", placeholder: "เช่น 10", value: 10 }
+      ],
+      calculate: (inputs) => {
+        const cost = parseFloat(inputs.cost);
+        const loss = parseFloat(inputs.loss);
+        if (isNaN(cost) || isNaN(loss)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง</span>';
+        const price = cost * (1 - loss / 100);
+        return `
+          <div class="space-y-2">
+            <p class="text-lg font-bold text-indigo-700">ราคาขาย = <span class="text-xl text-indigo-600">${price.toFixed(2)}</span> บาท</p>
+            <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono space-y-1">
+              <span class="text-indigo-500 font-bold">วิธีคิด:</span><br>
+              = ${cost} × (1 - ${loss} / 100)<br>
+              = ${cost} × (1 - ${loss / 100})<br>
+              = ${cost} × ${1 - loss / 100}<br>
+              = ${price.toFixed(2)} บาท
+            </div>
+          </div>
+        `;
+      }
+    }
   }
 };
 
@@ -94,7 +225,28 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: พื้นที่ = ½ × 10 × 6",
             "คำนวณผลลัพธ์: พื้นที่ = 5 × 6 = 30 ตารางเซนติเมตร"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณพื้นที่สามเหลี่ยม",
+          inputs: [
+            { name: "base", label: "ความยาวฐาน", placeholder: "เช่น 10", value: 10 },
+            { name: "height", label: "ความสูง", placeholder: "เช่น 6", value: 6 }
+          ],
+          calculate: (inputs) => {
+            const b = parseFloat(inputs.base);
+            const h = parseFloat(inputs.height);
+            if (isNaN(b) || isNaN(h)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วน</span>';
+            const area = 0.5 * b * h;
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">พื้นที่สามเหลี่ยม = <span class="text-xl text-indigo-600">${area.toFixed(2)}</span> ตารางหน่วย</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: ½ × ฐาน × สูง = ½ × ${b} × ${h} = ${area.toFixed(2)}
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
     if (name.includes('สี่เหลี่ยมผืนผ้า')) {
@@ -108,7 +260,28 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: พื้นที่ = 5 × 8",
             "คำนวณผลลัพธ์: พื้นที่ = 40 ตารางเมตร"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณพื้นที่สี่เหลี่ยมผืนผ้า",
+          inputs: [
+            { name: "width", label: "ความกว้าง", placeholder: "เช่น 5", value: 5 },
+            { name: "length", label: "ความยาว", placeholder: "เช่น 8", value: 8 }
+          ],
+          calculate: (inputs) => {
+            const w = parseFloat(inputs.width);
+            const l = parseFloat(inputs.length);
+            if (isNaN(w) || isNaN(l)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วน</span>';
+            const area = w * l;
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">พื้นที่สี่เหลี่ยมผืนผ้า = <span class="text-xl text-indigo-600">${area.toFixed(2)}</span> ตารางหน่วย</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: กว้าง × ยาว = ${w} × ${l} = ${area.toFixed(2)}
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
     if (name.includes('วงกลม') && name.includes('พื้นที่')) {
@@ -123,7 +296,30 @@ function getFormulaDetails(item) {
             "ตัดทอนเศษส่วน: ตัวหาร 7 ตัดกับรัศมี 7 ตัวบน จะเหลือเป็น 22 × 7",
             "คำนวณผลลัพธ์: พื้นที่ = 154 ตารางเซนติเมตร"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณพื้นที่วงกลม",
+          inputs: [
+            { name: "radius", label: "รัศมี (r)", placeholder: "เช่น 7", value: 7 }
+          ],
+          calculate: (inputs) => {
+            const r = parseFloat(inputs.radius);
+            if (isNaN(r)) return '<span class="text-rose-500 font-medium">กรุณากรอกรัศมี</span>';
+            const area = Math.PI * r * r;
+            const areaApprox = (22/7) * r * r;
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">พื้นที่วงกลม = <span class="text-xl text-indigo-600">${area.toFixed(2)}</span> ตารางหน่วย</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono space-y-1">
+                  <span>คิดแบบละเอียด (π ≈ 3.1416):</span><br>
+                  = πr² = 3.14159 × ${r}² = ${area.toFixed(2)}<br>
+                  <span>คิดแบบเศษส่วน (π ≈ 22/7):</span><br>
+                  = (22/7) × ${r} × ${r} = ${areaApprox.toFixed(2)}
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
     if (name.includes('สี่เหลี่ยมจัตุรัส')) {
@@ -157,7 +353,26 @@ function getFormulaDetails(item) {
             "ตัดทอนเศษส่วน: ตัวหาร 3 ตัดกับ 27 ได้ 9 ทำให้เหลือเป็น 4 × 3.14 × 9",
             "คำนวณผลลัพธ์: ปริมาตร = 36 × 3.14 = 113.04 ลูกบาศก์เซนติเมตร"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณปริมาตรทรงกลม",
+          inputs: [
+            { name: "radius", label: "รัศมี (r)", placeholder: "เช่น 3", value: 3 }
+          ],
+          calculate: (inputs) => {
+            const r = parseFloat(inputs.radius);
+            if (isNaN(r)) return '<span class="text-rose-500 font-medium">กรุณากรอกรัศมี</span>';
+            const vol = (4/3) * Math.PI * Math.pow(r, 3);
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">ปริมาตรทรงกลม = <span class="text-xl text-indigo-600">${vol.toFixed(2)}</span> ลูกบาศก์หน่วย</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: (4/3) × π × r³ = (4/3) × 3.14159 × ${r}³ = ${vol.toFixed(2)}
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
     if (name.includes('ปริมาตรทรงกระบอก')) {
@@ -224,7 +439,28 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: ระยะทาง (S) = 80 × 2.5",
             "คำนวณผลลัพธ์: ระยะทาง (S) = 200 กิโลเมตร"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณความเร็ว ระยะทาง เวลา",
+          inputs: [
+            { name: "speed", label: "ความเร็ว (v) (กม./ชม.)", placeholder: "เช่น 80", value: 80 },
+            { name: "time", label: "เวลาที่ใช้ (t) (ชั่วโมง)", placeholder: "เช่น 2.5", value: 2.5 }
+          ],
+          calculate: (inputs) => {
+            const v = parseFloat(inputs.speed);
+            const t = parseFloat(inputs.time);
+            if (isNaN(v) || isNaN(t)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วน</span>';
+            const dist = v * t;
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">ระยะทาง (S) = <span class="text-xl text-indigo-600">${dist.toFixed(2)}</span> กิโลเมตร</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: S = v × t = ${v} × ${t} = ${dist.toFixed(2)} กม.
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
     if (name.includes('ทำงานร่วมกัน 2 คน')) {
@@ -238,7 +474,31 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: เวลาเสร็จรวม = (4 × 6) / (4 + 6)",
             "คำนวณค่า: เวลาเสร็จรวม = 24 / 10 = 2.4 ชั่วโมง (หรือ 2 ชั่วโมง 24 นาที)"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณเวลาทำงานร่วมกัน 2 คน",
+          inputs: [
+            { name: "t1", label: "เวลาทำงานคนแรก (ชั่วโมง)", placeholder: "เช่น 4", value: 4 },
+            { name: "t2", label: "เวลาทำงานคนที่สอง (ชั่วโมง)", placeholder: "เช่น 6", value: 6 }
+          ],
+          calculate: (inputs) => {
+            const t1 = parseFloat(inputs.t1);
+            const t2 = parseFloat(inputs.t2);
+            if (isNaN(t1) || isNaN(t2)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วน</span>';
+            if (t1 + t2 === 0) return '<span class="text-rose-500 font-medium">เวลาทำงานรวมต้องไม่เป็นศูนย์</span>';
+            const total = (t1 * t2) / (t1 + t2);
+            const min = Math.round((total % 1) * 60);
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">เวลาทำงานร่วมกัน = <span class="text-xl text-indigo-600">${total.toFixed(2)}</span> ชั่วโมง</p>
+                <p class="text-xs text-indigo-600 font-medium">คิดเป็น: ${Math.floor(total)} ชั่วโมง ${min} นาที</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: (t₁ × t₂) / (t₁ + t₂) = (${t1} × ${t2}) / (${t1} + ${t2}) = ${t1 * t2} / ${t1 + t2} = ${total.toFixed(2)} ชั่วโมง
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
     if (name.includes('จับมือ')) {
@@ -252,7 +512,26 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: จำนวนครั้ง = 10 × (10 - 1) / 2",
             "คำนวณผลลัพธ์: จำนวนครั้ง = (10 × 9) / 2 = 90 / 2 = 45 ครั้ง"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณจำนวนการจับมือ (หรือแข่งพบกันหมด)",
+          inputs: [
+            { name: "n", label: "จำนวนคน (n)", placeholder: "เช่น 10", value: 10 }
+          ],
+          calculate: (inputs) => {
+            const n = parseInt(inputs.n);
+            if (isNaN(n) || n < 1) return '<span class="text-rose-500 font-medium">กรุณากรอกจำนวนคนที่ถูกต้อง</span>';
+            const count = (n * (n - 1)) / 2;
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">จำนวนครั้งการจับมือ = <span class="text-xl text-indigo-600">${count}</span> ครั้ง</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: n(n - 1) / 2 = ${n} × (${n} - 1) / 2 = ${n * (n - 1)} / 2 = ${count} ครั้ง
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
   }
@@ -270,7 +549,59 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: I = 220 / 44",
             "คำนวณผลลัพธ์: กระแสไฟฟ้า (I) = 5 แอมแปร์"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณกฎของโอห์ม (เว้นช่องว่างตัวแปรที่ต้องการหา 1 ช่อง)",
+          inputs: [
+            { name: "v", label: "แรงดันไฟฟ้า (V) (โวลต์)", placeholder: "เว้นว่างไว้เพื่อหาค่า V", value: "" },
+            { name: "i", label: "กระแสไฟฟ้า (I) (แอมแปร์)", placeholder: "เว้นว่างไว้เพื่อหาค่า I", value: 5 },
+            { name: "r", label: "ความต้านทาน (R) (โอห์ม)", placeholder: "เว้นว่างไว้เพื่อหาค่า R", value: 44 }
+          ],
+          calculate: (inputs) => {
+            const v = inputs.v ? parseFloat(inputs.v) : NaN;
+            const i = inputs.i ? parseFloat(inputs.i) : NaN;
+            const r = inputs.r ? parseFloat(inputs.r) : NaN;
+            
+            const countNan = [v, i, r].filter(isNaN).length;
+            if (countNan !== 1) {
+              return '<span class="text-indigo-600 font-medium">กรุณากรอกตัวแปร 2 ตัว และเว้นว่างไว้ 1 ตัวเพื่อคำนวณหาคำตอบ</span>';
+            }
+            
+            if (isNaN(v)) {
+              const resV = i * r;
+              return `
+                <div class="space-y-2">
+                  <p class="text-lg font-bold text-indigo-700">คำนวณหาแรงดัน (V) = <span class="text-xl text-indigo-600">${resV.toFixed(2)}</span> โวลต์</p>
+                  <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                    วิธีคิด: V = I × R = ${i} × ${r} = ${resV.toFixed(2)} โวลต์
+                  </div>
+                </div>
+              `;
+            } else if (isNaN(i)) {
+              if (r === 0) return '<span class="text-rose-500 font-medium">ความต้านทาน R ต้องไม่เป็นศูนย์</span>';
+              const resI = v / r;
+              return `
+                <div class="space-y-2">
+                  <p class="text-lg font-bold text-indigo-700">คำนวณหากระแส (I) = <span class="text-xl text-indigo-600">${resI.toFixed(2)}</span> แอมแปร์</p>
+                  <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                    วิธีคิด: I = V / R = ${v} / ${r} = ${resI.toFixed(2)} แอมแปร์
+                  </div>
+                </div>
+              `;
+            } else {
+              if (i === 0) return '<span class="text-rose-500 font-medium">กระแส I ต้องไม่เป็นศูนย์</span>';
+              const resR = v / i;
+              return `
+                <div class="space-y-2">
+                  <p class="text-lg font-bold text-indigo-700">คำนวณหาความต้านทาน (R) = <span class="text-xl text-indigo-600">${resR.toFixed(2)}</span> โอห์ม</p>
+                  <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                    วิธีคิด: R = V / I = ${v} / ${i} = ${resR.toFixed(2)} โอห์ม
+                  </div>
+                </div>
+              `;
+            }
+          }
+        }
       };
     }
     if (name.includes('กำลังไฟฟ้า')) {
@@ -284,7 +615,28 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: P = 220 × 0.2",
             "คำนวณผลลัพธ์: กำลังไฟฟ้า (P) = 44 วัตต์"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณกำลังไฟฟ้า",
+          inputs: [
+            { name: "voltage", label: "แรงดันไฟฟ้า (V) (โวลต์)", placeholder: "เช่น 220", value: 220 },
+            { name: "current", label: "กระแสไฟฟ้า (I) (แอมแปร์)", placeholder: "เช่น 0.2", value: 0.2 }
+          ],
+          calculate: (inputs) => {
+            const v = parseFloat(inputs.voltage);
+            const i = parseFloat(inputs.current);
+            if (isNaN(v) || isNaN(i)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วน</span>';
+            const power = v * i;
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">กำลังไฟฟ้า (P) = <span class="text-xl text-indigo-600">${power.toFixed(2)}</span> วัตต์</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: P = V × I = ${v} × ${i} = ${power.toFixed(2)} วัตต์
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
   }
@@ -302,7 +654,29 @@ function getFormulaDetails(item) {
             "แทนค่าลงในสูตร: ร้อยละ = (32 / 40) × 100%",
             "คำนวณผลลัพธ์: ร้อยละ = 0.8 × 100% = 80%"
           ]
-        }]
+        }],
+        calculator: {
+          title: "เครื่องคำนวณเปอร์เซ็นต์/ร้อยละ",
+          inputs: [
+            { name: "part", label: "จำนวนที่เป็นส่วนประกอบ", placeholder: "เช่น 32", value: 32 },
+            { name: "total", label: "จำนวนเต็มทั้งหมด", placeholder: "เช่น 40", value: 40 }
+          ],
+          calculate: (inputs) => {
+            const p = parseFloat(inputs.part);
+            const t = parseFloat(inputs.total);
+            if (isNaN(p) || isNaN(t)) return '<span class="text-rose-500 font-medium">กรุณากรอกข้อมูลให้ครบถ้วน</span>';
+            if (t === 0) return '<span class="text-rose-500 font-medium">จำนวนทั้งหมดต้องไม่เป็นศูนย์</span>';
+            const pct = (p / t) * 100;
+            return `
+              <div class="space-y-2">
+                <p class="text-lg font-bold text-indigo-700">คิดเป็น = <span class="text-xl text-indigo-600">${pct.toFixed(2)}%</span> ของทั้งหมด</p>
+                <div class="text-xs text-slate-500 bg-white p-3 rounded-lg border border-slate-100 font-mono">
+                  วิธีคิด: (ส่วน / ทั้งหมด) × 100 = (${p} / ${t}) × 100 = ${pct.toFixed(2)}%
+                </div>
+              </div>
+            `;
+          }
+        }
       };
     }
     if (name.includes('ภาษี')) {
@@ -614,9 +988,47 @@ function renderDetailPage(item, container) {
   // เน้นกรอบหมวดหมู่พิเศษ
   const isHighlighted = item.category.includes('กฟผ.') || item.category.includes('สมการ');
 
+  // ตรวจสอบและสร้างเครื่องคำนวณอัตโนมัติ
+  const hasCalculator = detail.calculator !== undefined;
+  let calculatorHtml = '';
+  if (hasCalculator) {
+    const calc = detail.calculator;
+    calculatorHtml = `
+      <!-- เครื่องคำนวณอัตโนมัติ -->
+      <div class="bg-gradient-to-br from-slate-50 to-indigo-50/20 rounded-2xl p-6 sm:p-8 shadow-sm border border-indigo-100/60 space-y-4 animate-fade-in">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-indigo-100/50 pb-3">
+          <span class="text-indigo-600 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+          </span> 
+          <span>${calc.title || 'เครื่องคำนวณสูตรอัตโนมัติ'}</span>
+        </h2>
+        <form id="calcForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5" onsubmit="event.preventDefault();">
+          ${calc.inputs.map(inp => `
+            <div class="space-y-1">
+              <label class="text-xs sm:text-sm font-semibold text-slate-600">${inp.label}</label>
+              <input
+                type="${inp.type || 'number'}"
+                id="calc_input_${inp.name}"
+                placeholder="${inp.placeholder || ''}"
+                value="${inp.value !== undefined ? inp.value : ''}"
+                class="block w-full px-3.5 py-2.5 border border-slate-300 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all"
+              />
+            </div>
+          `).join('')}
+        </form>
+        <div class="bg-indigo-50/60 rounded-2xl p-5 border border-indigo-100/40 mt-4 shadow-inner">
+          <h4 class="text-xs font-bold text-indigo-500 tracking-wide uppercase mb-2">แสดงผลลัพธ์การคำนวณ:</h4>
+          <div id="calcResult" class="text-sm sm:text-base text-slate-700">
+            <!-- ผลลัพธ์แสดงที่นี่ -->
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   container.innerHTML = `
     <!-- หัวข้อสูตร -->
-    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 animate-fade-in">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 animate-fade-in w-full">
       <div class="flex flex-wrap gap-2 mb-3 items-center">
         <span class="px-2.5 py-1 rounded-md text-xs font-semibold ${isHighlighted ? 'bg-amber-100 text-amber-800' : 'bg-indigo-50 text-indigo-700'}">
           ${item.category}
@@ -630,7 +1042,7 @@ function renderDetailPage(item, container) {
     </div>
 
     <!-- กล่องแสดงสูตรขนาดใหญ่ -->
-    <div class="bg-gradient-to-r from-indigo-900 to-slate-900 rounded-3xl p-6 sm:p-8 shadow-lg text-white animate-fade-in">
+    <div class="bg-gradient-to-r from-indigo-900 to-slate-900 rounded-3xl p-6 sm:p-8 shadow-lg text-white animate-fade-in w-full">
       <div class="flex items-center justify-between mb-4">
         <span class="text-xs sm:text-sm text-indigo-300 font-semibold tracking-wider uppercase">สูตรคำนวณ</span>
         <button
@@ -642,15 +1054,17 @@ function renderDetailPage(item, container) {
           <span id="copyBtnText">คัดลอกสูตร</span>
         </button>
       </div>
-      <div class="bg-indigo-950/50 rounded-2xl p-5 overflow-x-auto touch-pan-x border border-indigo-800/40">
+      <div class="bg-indigo-950/50 rounded-2xl p-5 overflow-x-auto touch-pan-x border border-indigo-800/40 w-full">
         <code class="text-xl sm:text-2xl font-mono text-indigo-200 whitespace-nowrap block font-bold">
           ${item.formula}
         </code>
       </div>
     </div>
 
+    ${calculatorHtml ? `<div class="w-full">${calculatorHtml}</div>` : ''}
+
     <!-- คำอธิบายและรายละเอียดการใช้งาน -->
-    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4 animate-fade-in">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4 animate-fade-in w-full">
       <h2 class="text-lg sm:text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
         <span class="text-indigo-600">■</span> คำอธิบายสูตรและแนวคิด
       </h2>
@@ -658,13 +1072,13 @@ function renderDetailPage(item, container) {
     </div>
 
     <!-- ตัวอย่างโจทย์และการแสดงวิธีทำ -->
-    <div class="space-y-6 animate-fade-in">
+    <div class="space-y-6 animate-fade-in w-full">
       <h2 class="text-lg sm:text-xl font-bold text-slate-800 flex items-center gap-2 px-1">
         <span class="text-indigo-600">■</span> ตัวอย่างโจทย์การประยุกต์ใช้สูตร
       </h2>
       
       ${detail.examples.map((ex, idx) => `
-        <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-4 w-full">
           <div class="flex items-center gap-2.5">
             <div class="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-indigo-50 text-indigo-600 font-bold text-xs sm:text-sm">
               ${idx + 1}
@@ -672,13 +1086,13 @@ function renderDetailPage(item, container) {
             <h3 class="font-bold text-slate-800 text-sm sm:text-base">${ex.problem}</h3>
           </div>
           
-          <div class="bg-slate-50 rounded-xl p-4 sm:p-5 border border-slate-100">
+          <div class="bg-slate-50 rounded-xl p-4 sm:p-5 border border-slate-100 w-full">
             <h4 class="text-xs font-bold text-slate-400 tracking-wide uppercase mb-3">แสดงวิธีทำทีละขั้นตอน:</h4>
-            <ol class="space-y-3">
+            <ol class="space-y-3 w-full">
               ${ex.steps.map((step, sIdx) => `
-                <li class="flex items-start gap-3 text-xs sm:text-sm text-slate-600">
+                <li class="flex items-start gap-3 text-xs sm:text-sm text-slate-600 w-full">
                   <span class="font-bold text-indigo-500 min-w-[20px] pt-0.5">${sIdx + 1}.</span>
-                  <span class="leading-relaxed">${step}</span>
+                  <span class="leading-relaxed break-all sm:break-words w-full">${step}</span>
                 </li>
               `).join('')}
             </ol>
@@ -687,6 +1101,34 @@ function renderDetailPage(item, container) {
       `).join('')}
     </div>
   `;
+
+  // หากมีเครื่องคำนวณ ให้รันการคำนวณและผูก event
+  if (hasCalculator) {
+    const calc = detail.calculator;
+    const calcForm = document.getElementById('calcForm');
+    const calcResult = document.getElementById('calcResult');
+    
+    const runCalculation = () => {
+      const inputs = {};
+      calc.inputs.forEach(inp => {
+        const el = document.getElementById(`calc_input_${inp.name}`);
+        inputs[inp.name] = el ? el.value : '';
+      });
+      const res = calc.calculate(inputs);
+      if (calcResult) {
+        calcResult.innerHTML = res;
+      }
+    };
+
+    if (calcForm) {
+      calcForm.querySelectorAll('input').forEach(inputEl => {
+        inputEl.addEventListener('input', runCalculation);
+      });
+    }
+    
+    // คำนวณค่าเริ่มต้นทันที
+    runCalculation();
+  }
 }
 
 // ฟังก์ชันสำหรับคัดลอกสูตรในหน้ารายละเอียด

@@ -73,6 +73,8 @@ const formulasData = [
   { id: 32, category: 'ร้อยละและเปอร์เซ็นต์', subCategory: 'ร้อยละพื้นฐาน', name: 'เปอร์เซ็นต์การเปลี่ยนแปลง', formula: '((ค่าใหม่ - ค่าเดิม) / ค่าเดิม) × 100%' },
   { id: 33, category: 'ร้อยละและเปอร์เซ็นต์', subCategory: 'การซื้อขายและภาษี', name: 'ราคาหลังหักส่วนลด', formula: 'ราคาเดิม × (1 - (ส่วนลด% / 100))' },
   { id: 34, category: 'ร้อยละและเปอร์เซ็นต์', subCategory: 'การซื้อขายและภาษี', name: 'ราคารวมภาษี (VAT)', formula: 'ราคาเดิม × (1 + (ภาษี% / 100))' },
+  { id: 237, category: 'ร้อยละและเปอร์เซ็นต์', subCategory: 'การซื้อขายและภาษี', name: 'ราคาขายเมื่อคิดกำไร (%)', formula: 'ราคาขาย = ต้นทุน × (1 + กำไร% / 100)' },
+  { id: 238, category: 'ร้อยละและเปอร์เซ็นต์', subCategory: 'การซื้อขายและภาษี', name: 'ราคาขายเมื่อคิดขาดทุน (%)', formula: 'ราคาขาย = ต้นทุน × (1 - ขาดทุน% / 100)' },
 
   // --- เลขยกกำลังและลอการิทึม ---
   { id: 46, category: 'เลขยกกำลังและลอการิทึม', subCategory: 'สมบัติเลขยกกำลัง', name: 'กฎการคูณเลขยกกำลัง', formula: 'aᵐ × aⁿ = a⁽ᵐ⁺ⁿ⁾' },
@@ -129,6 +131,7 @@ const formulasData = [
   { id: 233, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'การระเหยน้ำออก', formula: 'C₁V₁ = C₂V₂  (เนื้อสารเท่าเดิม แต่ปริมาตรลดลง: V₂ = V₁ - V(ระเหย))' },
   { id: 234, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'การเติมสารละลายบริสุทธิ์ 100%', formula: 'C₁V₁ + 100·V(เติม) = C₂V₂  (เช่น เติมเกลือหรือน้ำตาลล้วน)' },
   { id: 235, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'กฎสัดส่วนผสม (Alligation Rule)', formula: 'อัตราส่วนผสม V₁/V₂ = |C(รวม) - C₂| / |C₁ - C(รวม)|' },
+  { id: 236, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'ของผสม', name: 'ต้นทุนเฉลี่ยของผสม (Weighted Average Cost)', formula: 'P(เฉลี่ย) = (P₁w₁ + P₂w₂) / (w₁ + w₂)  (P: ราคา/หน่วย, w: อัตราส่วน/ปริมาณ)' },
   { id: 62, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'โจทย์เชาวน์และเบ็ดเตล็ด', name: 'จำนวนเสาไฟ (ทางตรง)', formula: 'จำนวนเสา = (ระยะทาง / ระยะห่าง) + 1' },
   { id: 63, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'โจทย์เชาวน์และเบ็ดเตล็ด', name: 'การจับมือ (ทุกคนจับ 1 ครั้ง)', formula: 'จำนวนครั้ง = n(n-1) / 2' },
   { id: 64, category: 'โจทย์ปัญหา (กฟผ./ก.พ.)', subCategory: 'โจทย์เชาวน์และเบ็ดเตล็ด', name: 'หัวและขาของสัตว์ (หาสัตว์ 2 ขา)', formula: 'จำนวน = (4×หัว - ขา) / 2' },
@@ -185,6 +188,7 @@ const formulasData = [
 // --- ข้อมูลหมวดหมู่และไอคอน ---
 const categories = [
   { name: 'ทั้งหมด', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
+  { name: 'สูตรที่บันทึกไว้', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-500"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>' },
   { name: 'โจทย์ปัญหา (กฟผ./ก.พ.)', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>' },
   { name: 'ไฟฟ้าพื้นฐาน (กฟผ.)', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
   { name: 'การแปลงหน่วย', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>' },
@@ -201,28 +205,133 @@ const categories = [
 ];
 
 let selectedCategory = 'ทั้งหมด';
+let selectedSubCategory = 'ทั้งหมด';
 let searchTerm = '';
 let copiedId = null;
 let currentTransitionClass = 'animate-fade-in';
+
+// ฟังก์ชันหาหัวข้อย่อยทั้งหมดของหมวดหมู่ที่เลือก
+function getSubCategories(categoryName) {
+  if (categoryName === 'ทั้งหมด' || categoryName === 'สูตรที่บันทึกไว้') {
+    return [];
+  }
+  const subCats = formulasData
+    .filter(item => item.category === categoryName)
+    .map(item => item.subCategory);
+  return [...new Set(subCats)];
+}
+
+// ฟังก์ชันกรองหัวข้อย่อย
+function selectSubCategory(subCategoryName) {
+  selectedSubCategory = subCategoryName;
+  renderFormulas();
+}
+
+// ฟังก์ชันสร้าง Dropdown สำหรับหัวข้อย่อย
+function renderSubCategoriesDropdown() {
+  const container = document.getElementById('subCategoryContainer');
+  if (!container) return;
+  
+  const subCats = getSubCategories(selectedCategory);
+  
+  if (subCats.length === 0) {
+    container.classList.add('hidden');
+    return;
+  }
+  
+  container.classList.remove('hidden');
+  
+  // นับจำนวนสูตรทั้งหมดในหมวดหมู่นี้
+  const totalCount = formulasData.filter(item => item.category === selectedCategory).length;
+  
+  container.innerHTML = `
+    <div class="max-w-md w-full bg-white p-4 sm:p-5 rounded-2xl border border-slate-100 shadow-sm animate-fade-in">
+      <label for="subCategorySelect" class="block text-xs sm:text-sm font-bold text-slate-700 mb-2 flex items-center gap-1.5">
+        <span class="text-indigo-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        </span>
+        กรองข้อมูลเฉพาะหัวข้อย่อย:
+      </label>
+      <div class="relative">
+        <select
+          id="subCategorySelect"
+          onchange="selectSubCategory(this.value)"
+          class="block w-full px-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 appearance-none cursor-pointer pr-10 hover:border-slate-300 transition-all"
+        >
+          <option value="ทั้งหมด" ${selectedSubCategory === 'ทั้งหมด' ? 'selected' : ''}>หัวข้อย่อยทั้งหมด (${totalCount} สูตร)</option>
+          ${subCats.map(sub => {
+            const count = formulasData.filter(item => item.category === selectedCategory && item.subCategory === sub).length;
+            return `<option value="${sub}" ${selectedSubCategory === sub ? 'selected' : ''}>${sub} (${count} สูตร)</option>`;
+          }).join('')}
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ฟังก์ชันดึงจำนวนสูตรในแต่ละหมวดหมู่
+function getFormulaCount(categoryName) {
+  if (categoryName === 'ทั้งหมด') {
+    return formulasData.length;
+  }
+  if (categoryName === 'สูตรที่บันทึกไว้') {
+    return getBookmarks().length;
+  }
+  return formulasData.filter(item => item.category === categoryName).length;
+}
 
 // ฟังก์ชันสร้างปุ่มหมวดหมู่
 function renderCategories() {
   const container = document.getElementById('categoryContainer');
   if (!container) return;
   
-  container.innerHTML = categories.map(cat => `
-    <button
-      onclick="selectCategory('${cat.name}')"
-      class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl whitespace-nowrap text-xs sm:text-sm font-medium transition-all shrink-0 ${
-        selectedCategory === cat.name
-          ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200'
-          : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-      }"
-    >
-      ${cat.icon}
-      <span>${cat.name}</span>
-    </button>
-  `).join('');
+  container.innerHTML = categories.map(cat => {
+    const count = getFormulaCount(cat.name);
+    const isSelected = selectedCategory === cat.name;
+    
+    // กำหนดโทนสีไอคอนสำหรับแต่ละหมวดหมู่เพื่อความสดใสและพรีเมียม
+    let iconColorClass = 'text-indigo-600 bg-indigo-50/50';
+    if (cat.name === 'สูตรที่บันทึกไว้') iconColorClass = 'text-rose-500 bg-rose-50';
+    else if (cat.name === 'โจทย์ปัญหา (กฟผ./ก.พ.)') iconColorClass = 'text-amber-600 bg-amber-50';
+    else if (cat.name === 'ไฟฟ้าพื้นฐาน (กฟผ.)') iconColorClass = 'text-yellow-600 bg-yellow-50';
+    else if (cat.name === 'การแปลงหน่วย') iconColorClass = 'text-blue-500 bg-blue-50';
+    else if (cat.name === 'สมการและระบบสมการ') iconColorClass = 'text-purple-500 bg-purple-50';
+    else if (cat.name === 'พีชคณิต') iconColorClass = 'text-teal-500 bg-teal-50';
+    else if (cat.name === 'เรขาคณิต') iconColorClass = 'text-emerald-500 bg-emerald-50';
+    else if (cat.name === 'ตรีโกณมิติ') iconColorClass = 'text-pink-500 bg-pink-50';
+    else if (cat.name === 'แคลคูลัส') iconColorClass = 'text-cyan-500 bg-cyan-50';
+    else if (cat.name === 'สถิติ') iconColorClass = 'text-indigo-500 bg-indigo-50';
+    else if (cat.name === 'ลำดับและอนุกรม') iconColorClass = 'text-orange-500 bg-orange-50';
+    else if (cat.name === 'ร้อยละและเปอร์เซ็นต์') iconColorClass = 'text-rose-500 bg-rose-50';
+    else if (cat.name === 'เลขยกกำลังและลอการิทึม') iconColorClass = 'text-violet-500 bg-violet-50';
+    else if (cat.name === 'เซตและความน่าจะเป็น') iconColorClass = 'text-fuchsia-500 bg-fuchsia-50';
+
+    return `
+      <button
+        onclick="selectCategory('${cat.name}')"
+        class="w-full flex items-center gap-2 sm:gap-2.5 p-2 sm:p-2.5 rounded-xl sm:rounded-2xl transition-all border text-left hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group ${
+          isSelected
+            ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-100'
+            : 'bg-white border-slate-200/80 text-slate-700 hover:border-indigo-300 shadow-sm'
+        }"
+      >
+        <div class="p-1.5 sm:p-2 rounded-lg sm:rounded-xl shrink-0 transition-colors flex items-center justify-center ${
+          isSelected ? 'bg-indigo-500/80 text-white' : iconColorClass
+        }">
+          ${cat.icon}
+        </div>
+        <div class="min-w-0 leading-tight">
+          <p class="text-[10px] sm:text-xs font-bold truncate">${cat.name}</p>
+          <p class="text-[8px] sm:text-[9px] mt-0.5 font-medium ${isSelected ? 'text-indigo-200' : 'text-slate-400'}">${count} สูตร</p>
+        </div>
+      </button>
+    `;
+  }).join('');
 }
 
 // ฟังก์ชันสร้างการ์ดสูตร
@@ -237,8 +346,23 @@ function renderFormulas() {
   const filtered = formulasData.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           item.formula.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'ทั้งหมด' || item.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    let matchesCategory = false;
+    if (selectedCategory === 'ทั้งหมด') {
+      matchesCategory = true;
+    } else if (selectedCategory === 'สูตรที่บันทึกไว้') {
+      const bookmarks = getBookmarks();
+      matchesCategory = bookmarks.includes(item.id);
+    } else {
+      matchesCategory = item.category === selectedCategory;
+    }
+    
+    // การกรองด้วยหัวข้อย่อย
+    let matchesSubCategory = true;
+    if (selectedSubCategory !== 'ทั้งหมด' && selectedCategory !== 'ทั้งหมด' && selectedCategory !== 'สูตรที่บันทึกไว้') {
+      matchesSubCategory = item.subCategory === selectedSubCategory;
+    }
+    
+    return matchesSearch && matchesCategory && matchesSubCategory;
   });
 
   if (filtered.length === 0) {
@@ -273,14 +397,22 @@ function renderFormulas() {
           // เน้นกรอบให้หมวด กฟผ. และ สมการ
           const isHighlighted = item.category.includes('กฟผ.') || item.category.includes('สมการ');
           const isCopied = copiedId === item.id;
+          const isBookmarked = getBookmarks().includes(item.id);
           
           return `
-            <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-200 group flex flex-col justify-between min-w-0 ${isHighlighted ? 'border-amber-200' : 'border-slate-100'}">
+            <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border hover:shadow-md hover:border-indigo-200 transition-all duration-200 group flex flex-col justify-between min-w-0 ${isHighlighted ? 'border-amber-200' : 'border-slate-100'}">
               <div class="w-full overflow-hidden">
-                <div class="flex justify-between items-start mb-2 sm:mb-3">
+                <div class="flex justify-between items-center mb-2 sm:mb-3">
                   <span class="inline-block px-2 sm:px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-medium tracking-wide ${isHighlighted ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-500'}">
                     ${selectedCategory === 'ทั้งหมด' ? item.subCategory : item.category}
                   </span>
+                  <button
+                    onclick="event.stopPropagation(); toggleBookmark(${item.id})"
+                    class="p-1.5 rounded-lg hover:bg-slate-100 active:bg-slate-200 transition-colors ${isBookmarked ? 'text-rose-500' : 'text-slate-400 hover:text-rose-500'}"
+                    title="${isBookmarked ? 'ยกเลิกการบันทึก' : 'บันทึกสูตร'}"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="${isBookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-all"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                  </button>
                 </div>
                 <h3 class="text-base sm:text-lg font-semibold text-slate-800 mb-3 sm:mb-4 pr-2">${item.name}</h3>
                 <div class="bg-slate-50 rounded-xl p-3 sm:p-4 overflow-x-auto touch-pan-x w-full">
@@ -322,17 +454,11 @@ function renderFormulas() {
 // ฟังก์ชันเลือกหมวดหมู่
 function selectCategory(categoryName, transitionClass = 'animate-fade-in') {
   selectedCategory = categoryName;
+  selectedSubCategory = 'ทั้งหมด'; // รีเซ็ตหัวข้อย่อยเมื่อเลือกหมวดหมู่หลักใหม่
   currentTransitionClass = transitionClass;
   renderCategories();
+  renderSubCategoriesDropdown(); // สร้างหรือซ่อน Dropdown ของหัวข้อย่อย
   renderFormulas();
-  
-  // เลื่อนปุ่มหมวดหมู่ที่เลือกให้แสดงตรงกลางจอ
-  setTimeout(() => {
-    const activeBtn = document.querySelector('#categoryContainer button.bg-indigo-600');
-    if (activeBtn) {
-      activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-  }, 50);
 }
 
 // ฟังก์ชันคัดลอกสูตร
@@ -355,6 +481,29 @@ function copyToClipboard(text, id) {
   document.body.removeChild(textArea);
 }
 
+// ฟังก์ชันดึง Bookmarks จาก localStorage
+function getBookmarks() {
+  const bookmarks = localStorage.getItem('math_bookmarks');
+  return bookmarks ? JSON.parse(bookmarks) : [];
+}
+
+// ฟังก์ชัน Toggle Bookmark
+function toggleBookmark(id) {
+  let bookmarks = getBookmarks();
+  if (bookmarks.includes(id)) {
+    bookmarks = bookmarks.filter(bId => bId !== id);
+  } else {
+    bookmarks.push(id);
+  }
+  localStorage.setItem('math_bookmarks', JSON.stringify(bookmarks));
+  renderFormulas();
+  renderCategories(); // อัปเดตเพื่อสะท้อนสถานะ
+}
+
+// ผูกฟังก์ชันเข้ากับ window เผื่อกรณีใช้ข้ามไฟล์
+window.getBookmarks = getBookmarks;
+window.toggleBookmark = toggleBookmark;
+
 // รอให้โครงสร้างหน้าเว็บโหลดเสร็จก่อนเริ่มทำงาน
 document.addEventListener('DOMContentLoaded', () => {
   // ฟังก์ชันค้นหา
@@ -364,7 +513,9 @@ document.addEventListener('DOMContentLoaded', () => {
       searchTerm = e.target.value;
       if (searchTerm.trim() !== '') {
         selectedCategory = 'ทั้งหมด';
+        selectedSubCategory = 'ทั้งหมด';
         renderCategories();
+        renderSubCategoriesDropdown();
       }
       renderFormulas();
     });
@@ -469,5 +620,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // เริ่มทำงานครั้งแรก
   renderCategories();
+  renderSubCategoriesDropdown();
   renderFormulas();
 });
